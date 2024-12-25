@@ -3,6 +3,9 @@ package com.example.tmdb.model;
 import java.util.ArrayList;
 import java.util.List;
 import android.os.Parcelable;
+
+import androidx.annotation.NonNull;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
@@ -221,4 +224,24 @@ public class Movie implements Parcelable
         return 0;
     }
 
+
+    @Override
+    public String toString() {
+        return "Movie{" +
+                "adult=" + adult +
+                ", backdropPath='" + backdropPath + '\'' +
+                ", genreIds=" + genreIds +
+                ", id=" + id +
+                ", originalLanguage='" + originalLanguage + '\'' +
+                ", originalTitle='" + originalTitle + '\'' +
+                ", overview='" + overview + '\'' +
+                ", popularity=" + popularity +
+                ", posterPath='" + posterPath + '\'' +
+                ", releaseDate='" + releaseDate + '\'' +
+                ", title='" + title + '\'' +
+                ", video=" + video +
+                ", voteAverage=" + voteAverage +
+                ", voteCount=" + voteCount +
+                '}';
+    }
 }

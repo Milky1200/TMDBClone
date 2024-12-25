@@ -1,6 +1,7 @@
 package com.example.tmdb.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.example.tmdb.R;
 import com.example.tmdb.model.Movie;
+import com.example.tmdb.view.MovieActivity;
 
 import java.util.ArrayList;
 
@@ -61,6 +63,20 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
             movieImage=itemView.findViewById(R.id.ivMovie);
             movieTitle=itemView.findViewById(R.id.tvTitle);
             movieRating=itemView.findViewById(R.id.tvRating);
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    int position=getAdapterPosition();
+                    if(position!=RecyclerView.NO_POSITION) {
+                        Movie selectedMovie = movieArrayList.get(position);
+                        Intent iNext=new Intent(context, MovieActivity.class);
+                        iNext.putExtra("movie",selectedMovie);
+                        context.startActivity(iNext);
+                    }
+
+                }
+            });
         }
     }
 }

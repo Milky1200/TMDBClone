@@ -1,9 +1,8 @@
-package com.example.tmdb;
+package com.example.tmdb.view;
 
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.util.Log;
-import android.widget.Toolbar;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -15,6 +14,7 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import com.example.tmdb.R;
 import com.example.tmdb.adapter.MovieAdapter;
 import com.example.tmdb.model.Movie;
 import com.example.tmdb.model.MovieDBResponse;
