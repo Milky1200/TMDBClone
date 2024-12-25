@@ -24,9 +24,12 @@ import com.example.tmdb.service.RetrofitInstance;
 import java.util.ArrayList;
 
 import io.reactivex.Observable;
+import io.reactivex.ObservableSource;
 import io.reactivex.Scheduler;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.functions.Function;
+import io.reactivex.functions.Predicate;
 import io.reactivex.observers.DisposableObserver;
 import io.reactivex.schedulers.Schedulers;
 import retrofit2.Call;
@@ -52,6 +55,7 @@ public class MainActivity extends AppCompatActivity {
             return insets;
         });
 
+        movies=new ArrayList<Movie>();
         compositeDisposable=new CompositeDisposable();
         swipeRefreshLayout=findViewById(R.id.swipeRefresh);
         swipeRefreshLayout.setColorSchemeColors(R.color.background);
@@ -92,12 +96,21 @@ public class MainActivity extends AppCompatActivity {
         compositeDisposable.add(
         movieDBResponseObservable.subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribeWith(new DisposableObserver<MovieDBResponse>() {
+                .flatMap(new Function<MovieDBResponse, ObservableSource<Movie>>() {
                     @Override
-                    public void onNext(MovieDBResponse response) {
-
-                        movies=(ArrayList<Movie>)response.getResults();
-                        showOnRecyclerView();
+                    public ObservableSource<Movie> apply(MovieDBResponse response) throws Exception {
+                        return Observable.fromArray(response.getResults().toArray(new Movie[0]));
+                    }
+                }).filter(new Predicate<Movie>() {
+                    @Override
+                    public boolean test(Movie movie) throws Exception {
+                        return movie.getVoteAverage()>=7.0;
+                    }
+                })
+                .subscribeWith(new DisposableObserver<Movie>() {
+                    @Override
+                    public void onNext(Movie movie) {
+                        movies.add(movie);
                     }
 
                     @Override
@@ -107,7 +120,7 @@ public class MainActivity extends AppCompatActivity {
 
                     @Override
                     public void onComplete() {
-
+                        showOnRecyclerView();
                     }
                 }));
 
