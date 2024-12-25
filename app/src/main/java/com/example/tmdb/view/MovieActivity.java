@@ -61,6 +61,7 @@ public class MovieActivity extends AppCompatActivity {
             Toast.makeText(getApplicationContext(),movie.getOriginalTitle(),Toast.LENGTH_LONG).show();
             movieImageUri="https://image.tmdb.org/t/p/w500/"+movie.getPosterPath();
 
+            getSupportActionBar().setTitle(movie.getTitle());
             binding.toolbar.setTitle(movie.getOriginalTitle());
             binding.collapsingToolbar.setTitle(movie.getOriginalTitle());
             tvTitle.setText(movie.getTitle().toString());
